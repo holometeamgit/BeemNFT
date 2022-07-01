@@ -6,24 +6,32 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./NFTStorage.sol";
 import "./IERC721Mintable.sol";
 
-contract BeemNFT is ERC721, AccessControl, NFTStorage, IERC721Mintable {
+contract BeemNFT is NFTStorage, AccessControl, IERC721Mintable {
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
 
-    uint256 _tokenId;
+    uint256 _nextTokenId;
 
-    constructor(string memory name, string memory symbol) ERC721(name, symbol) {
+    constructor(string memory name, string memory symbol) NFTStorage(name, symbol) {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _setupRole(MINTER_ROLE, msg.sender);
     }
-    
+
     function mint(
         address to,
-        bytes memory _data
-    ) external override onlyRole(MINTER_ROLE) {
-        _safeMint(to, _tokenId, _data);
-        _tokenId++;
+        string memory tokenURI
+    ) external virtual override onlyRole(MINTER_ROLE) {
+        _safeMint(to, _nextTokenId);
+        setTokenURI(_nextTokenId, tokenURI);
+        _nextTokenId++;
      }
+
+    function burn(uint256 tokenId) public virtual {
+        //solhint-disable-next-line max-line-length
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Burnable: caller is not owner nor approved");
+        _burn(tokenId);
+    }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override (ERC721, AccessControl) returns (bool) {
         return super.supportsInterface(interfaceId);

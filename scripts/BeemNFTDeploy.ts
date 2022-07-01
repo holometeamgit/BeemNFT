@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: __dirname + "/.env" });
 
 import { ethers } from "hardhat";
-import { ERC20Token } from "../src/types";
+import { BeemNFT } from "../src/types";
 
 async function main() {
   const factory = await ethers.getContractFactory("BeemNFT");
