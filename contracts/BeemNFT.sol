@@ -9,7 +9,6 @@ import "./IERC721Mintable.sol";
 contract BeemNFT is NFTStorage, AccessControl, IERC721Mintable {
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    bytes32 public constant BURNER_ROLE = keccak256("BURNER_ROLE");
 
     uint256 _nextTokenId;
 

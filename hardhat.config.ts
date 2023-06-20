@@ -8,7 +8,6 @@ import "solidity-coverage";
 import "@nomiclabs/hardhat-ganache";
 import "tsconfig-paths/register";
 import "@nomiclabs/hardhat-etherscan";
-//import "hardhat-etherscan-abi";
 
 import "./tasks/index";
 
@@ -19,7 +18,6 @@ const {
   PRIVATE_KEY2,
   PRIVATE_KEY3,
   API_KEY_ETHERSCAN,
-  API_KEY_BSCSCAN,
 } = process.env;
 
 module.exports = {
@@ -38,18 +36,6 @@ module.exports = {
       url: API_URL_GOERLI,
       accounts: [PRIVATE_KEY, PRIVATE_KEY2, PRIVATE_KEY3],
     },
-    /*  bsctestnet: {
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
-      chainId: 97,
-      gasPrice: 20000000000,
-      accounts: [PRIVATE_KEY, PRIVATE_KEY2, PRIVATE_KEY3],
-    },
-    hardhat: {
-      forking: {
-        url: API_URL_RINKEBY,
-        blockNumber: 10706510,
-      },
-    },*/
   },
   typechain: {
     outDir: "src/types",
@@ -59,6 +45,5 @@ module.exports = {
   },
   etherscan: {
     apiKey: API_KEY_ETHERSCAN,
-    //apiKey: API_KEY_BSCSCAN,
   },
 };
